@@ -48,7 +48,7 @@ def get_document_attributes_from_ajax(url: str) -> Dict[str, Any]:
             att_value = att_soup.find("div", attrs={"class": "ds fl"}).text.strip()
 
             atts[att_name] = att_value
-
+        atts['Ghi chú'] = soup.find("div", attrs={"class": "tt", "style": "font-weight: normal"}).text.strip()
         return atts
 
     except Exception as e:
@@ -69,15 +69,16 @@ def modify_document_attribute(doc_attribute: Dict[str, Any]) -> Dict[str, Any]:
     new_atts["issued_date"] = doc_attribute.get("Ngày ban hành", "")
     new_atts["effective_date"] = doc_attribute.get("Ngày hiệu lực", "")
     new_atts["enforced_date"] = doc_attribute.get("Ngày đăng", "")
+    new_atts["note"] = doc_attribute.get("Ghi chú", "")
 
     #extra atts
-    new_atts["the_reason_for_this_expiration"] = []
-    new_atts["the_reason_for_this_expiration_part"] = []
-    new_atts["effective_area"] = ""
-    new_atts["expiry_date"] = ""
-    new_atts["gazette_date"] = ""
-    new_atts["information_applicable"] = []
-    new_atts["document_department"] = []
-    new_atts["collection_source"] = []
+    # new_atts["the_reason_for_this_expiration"] = []
+    # new_atts["the_reason_for_this_expiration_part"] = []
+    # new_atts["effective_area"] = ""
+    # new_atts["expiry_date"] = ""
+    # new_atts["gazette_date"] = ""
+    # new_atts["information_applicable"] = []
+    # new_atts["document_department"] = []
+    # new_atts["collection_source"] = []
 
     return new_atts
