@@ -1,0 +1,6 @@
+beautifulsoup4>=4.9.3
+requests>=2.25.1
+pandas>=1.2.0
+html2text>=2020.1.16
+fasteners>=0.16
+tqdm>=4.62.3
