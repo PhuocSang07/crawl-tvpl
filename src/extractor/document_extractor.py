@@ -58,14 +58,13 @@ def get_document_attributes_from_ajax(url: str) -> Dict[str, Any]:
 def modify_document_attribute(doc_attribute: Dict[str, Any]) -> Dict[str, Any]:
     new_atts = {}
     new_atts["official_number"] = [doc_attribute.get("Số hiệu", "")]
-    new_atts["document_info"] = [doc_attribute.get('Mô tả', ""),
-                                 "Tình trạng: " + doc_attribute.get("Tình trạng", "")]
-    new_atts["issuing_body/office/signer"] = [doc_attribute.get("Nơi ban hành", ""),
-                                              "",
-                                              doc_attribute.get("Người ký", "")]
+    new_atts["document_info"] = [doc_attribute.get('Mô tả', "")]
+    new_atts["document_status"] = [doc_attribute.get("Tình trạng", "")],
+    new_atts["place_issue"] = [doc_attribute.get("Nơi ban hành", ""), ""]
+    new_atts["signer"] = [doc_attribute.get("Người ký", "")]
     new_atts["document_type"] = [doc_attribute.get("Loại văn bản", "")]
     new_atts["document_field"] = [doc_attribute.get("Lĩnh vực, ngành", "")]
-
+    new_atts["gazette_number"] = [doc_attribute.get(" Số công báo", "")]
     new_atts["issued_date"] = doc_attribute.get("Ngày ban hành", "")
     new_atts["effective_date"] = doc_attribute.get("Ngày hiệu lực", "")
     new_atts["enforced_date"] = doc_attribute.get("Ngày đăng", "")
