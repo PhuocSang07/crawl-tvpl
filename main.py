@@ -34,7 +34,7 @@ def main():
     crawler = DocumentCrawler(num_threads=4)
     
     # Split URLs into batches (50 URLs per batch)
-    batch_size = 50
+    batch_size = 1
     url_batches = split_urls_into_batches(url_list, batch_size)
     total_batches = len(url_batches)
     

@@ -36,8 +36,7 @@ def get_document_content(soup) -> str:
 def get_document_attributes_from_ajax(url: str) -> Dict[str, Any]:
     """Get document attributes from AJAX endpoint."""
     doc_id = get_id_from_url(url)
-    url_luocdo = "https://thuvienphapluat.vn/AjaxLoadData/LoadLuocDo.aspx?LawID=" + doc_id
-
+    url_luocdo = "https://thuvienphapluat.vn/AjaxLoadData/LoadLuocDo.aspx?LawID="+doc_id+"&IstraiNghiem=False"
     try:
         soup = load_url_luocdo(url, url_luocdo, return_content=True)
         atts = {}
@@ -48,7 +47,7 @@ def get_document_attributes_from_ajax(url: str) -> Dict[str, Any]:
             att_value = att_soup.find("div", attrs={"class": "ds fl"}).text.strip()
 
             atts[att_name] = att_value
-        atts['Ghi chú'] = soup.find("div", attrs={"class": "tt", "style": "font-weight: normal"}).text.strip()
+        atts['Ghi chú'] = soup.find("div", attrs={"class": "tt", "style": "font-weight: normal"}).text.strip() if soup.find("div", attrs={"class": "tt", "style": "font-weight: normal"}) else ""
         return atts
 
     except Exception as e:
