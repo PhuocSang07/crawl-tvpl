@@ -71,3 +71,8 @@ def get_all_sitemaps_url(sitemap_url: str) -> List[str]:
     
     sitemap_tags = sitemap_content.find_all('loc')
     return [tag.text for tag in sitemap_tags]
+
+# Helper function for crawl Q&A
+def get_type_of_law(url):
+    text = url.split("/")[4]
+    return text.split("?")[0]
