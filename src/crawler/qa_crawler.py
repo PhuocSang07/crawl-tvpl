@@ -108,24 +108,25 @@ class QACrawler:
     def crawl_batch(self, df: List[pd.DataFrame]) -> None:
         """Crawl a batch of URLs using multiple threads."""
         with ThreadPoolExecutor(max_workers=self.num_threads) as executor:
-            future_to_url = {executor.submit(self.crawl_qa, data['link'], data['keyword'], data['date'], data['time'], data['type']): data for data in df.iloc}
+            future_to_url = {executor.submit(self.crawl_qa, data['link'], data['keyword'], data['date'], data['time'], data['type']): data for _, data in df.iterrows()}
             for future in as_completed(future_to_url):
-                # url = future_to_url[future]
                 try:
                     item = future.result()
-                    if item:
+                    if item and isinstance(item, dict) and 'urls' in item:
                         with self.lock:
                             self.documents.append(item)
                             self.successful_urls.append(item['urls'])
                             self.logger.info(f"Successfully crawled: {item['urls']}")
                     else:
                         with self.lock:
-                            self.failed_urls.append(item['urls'])
-                            self.logger.warning(f"Failed to crawl: {item['urls']}")
+                            url = future_to_url[future].get('link', 'unknown')
+                            self.failed_urls.append(url)
+                            self.logger.warning(f"Failed to crawl: {url}")
                 except Exception as e:
+                    url = future_to_url[future].get('link', 'unknown')
                     with self.lock:
-                        self.failed_urls.append(item['urls'])
-                        self.logger.error(f"Error crawling {item['urls']}: {str(e)}")
+                        self.failed_urls.append(url)
+                        self.logger.error(f"Error crawling {url}: {str(e)}")
 
         # Save URLs to files
         if self.successful_urls:

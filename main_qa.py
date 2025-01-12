@@ -65,15 +65,15 @@ def main():
         df = df.dropna()
         df.to_csv('./data/data.csv', index=False)
     else:
-        df = pd.read_csv('./data/data.csv').iloc[:2]
+        df = pd.read_csv('./data/data.csv')
     
     logger.info(f'Number of sitemap URLs: {len(df)}')
         
     # Initialize crawler with 4 threads
-    crawler = QACrawler(num_threads=4)
+    crawler = QACrawler(num_threads=512)
     
     # Split URLs into batches (50 URLs per batch)
-    batch_size = 100
+    batch_size = 400
     url_batches = split_urls_into_batches(df=df, batch_size=batch_size)
     total_batches = len(url_batches)
     logger.info(f'Total batches: {total_batches}')
