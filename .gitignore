@@ -1,6 +1,9 @@
 config/*
 data/processed/*
 data/raw/*
+data/qa/*
+failed_qa_urls.txt 
+successful_qa_urls.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
